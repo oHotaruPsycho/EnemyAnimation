@@ -10,7 +10,7 @@ Sprite_Enemy.prototype.initMembers = function() {
     this._effectType = null;
     this._effectDuration = 0;
     this._shake = 0;
-    this._spriteCnt = 0;
+    this._spriteCnt = 1;
     this._sleepCnt = 0;
     this.createStateIconSprite();
 };
@@ -23,17 +23,36 @@ Sprite_Enemy.prototype.updateBitmap = function() {
     if (this._battlerName !== name || this._battlerHue !== hue || (enemy.meta.animetion && enemy.meta.baseName)) {
             if(enemy.meta.animetion && enemy.meta.baseName){
                 if(this._sleepCnt > 5){
-                    this._spriteCnt = enemy.meta.animetion > this._spriteCnt ? ++this._spriteCnt : 0;
+                    this._spriteCnt = enemy.meta.animetion > this._spriteCnt ? ++this._spriteCnt : 1;
                     this._sleepCnt = 0;
                 }else{
                     this._sleepCnt++;
                 }
                 var baseNm = enemy.meta.baseName;
-                name = baseNm + (this._spriteCnt > 0 ? this._spriteCnt : "");
+                name = baseNm + this._spriteCnt;
             }
         this._battlerName = name;
         this._battlerHue = hue;
         this.loadBitmap(name, hue);
         this.initVisibility();
+    }
+};
+
+Sprite_Enemy.prototype.setBattler = function(battler) {
+    Sprite_Battler.prototype.setBattler.call(this, battler);
+    this._enemy = battler;
+    this.initLoadPictures();
+    this.setHome(battler.screenX(), battler.screenY());
+    this._stateIconSprite.setup(battler);
+};
+
+Sprite_Enemy.prototype.initLoadPictures = function() {
+    var enemy = $dataEnemies[this._enemy._enemyId];
+    if (enemy.meta.animetion && enemy.meta.baseName) {
+        for(var i = 1; i <= enemy.meta.animetion; i++){
+            var baseNm = enemy.meta.baseName;
+            var name = baseNm + i;
+            this.loadBitmap(name, this._enemy.battlerHue());
+        }
     }
 };
