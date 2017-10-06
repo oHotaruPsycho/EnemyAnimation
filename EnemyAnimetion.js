@@ -34,7 +34,8 @@ Sprite_Enemy.prototype.updateBitmap = function() {
         this._battlerName = name;
         this._battlerHue = hue;
         this.loadBitmap(name, hue);
-        this.initVisibility();
+        /* ここをコメントアウトでアニメーションしながら消えるアニメーションが行われるようになったけどなぜかよくわかってない← */
+        //this.initVisibility();
     }
 };
 
