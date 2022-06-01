@@ -20,10 +20,10 @@ Sprite_Enemy.prototype.updateBitmap = function() {
     var enemy = $dataEnemies[this._enemy._enemyId];
     var name = this._enemy.battlerName();
     var hue = this._enemy.battlerHue();
-    if (this._battlerName !== name || this._battlerHue !== hue || (enemy.meta.animetion && enemy.meta.baseName)) {
-            if(enemy.meta.animetion && enemy.meta.baseName){
+    if (this._battlerName !== name || this._battlerHue !== hue || (enemy.meta.animation && enemy.meta.baseName)) {
+            if(enemy.meta.animation && enemy.meta.baseName){
                 if(this._sleepCnt > 5){
-                    this._spriteCnt = enemy.meta.animetion > this._spriteCnt ? ++this._spriteCnt : 1;
+                    this._spriteCnt = enemy.meta.animation > this._spriteCnt ? ++this._spriteCnt : 1;
                     this._sleepCnt = 0;
                 }else{
                     this._sleepCnt++;
@@ -49,8 +49,8 @@ Sprite_Enemy.prototype.setBattler = function(battler) {
 
 Sprite_Enemy.prototype.initLoadPictures = function() {
     var enemy = $dataEnemies[this._enemy._enemyId];
-    if (enemy.meta.animetion && enemy.meta.baseName) {
-        for(var i = 1; i <= enemy.meta.animetion; i++){
+    if (enemy.meta.animation && enemy.meta.baseName) {
+        for(var i = 1; i <= enemy.meta.animation; i++){
             var baseNm = enemy.meta.baseName;
             var name = baseNm + i;
             this.loadBitmap(name, this._enemy.battlerHue());
